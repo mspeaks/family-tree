@@ -1,38 +1,37 @@
-
 const familyMembers = [
   {
     name: "John",
-    image: "icons/man_glasses_icon.png",
+    image: "img/man_glasses_icon.PNG",
     position: { top: "100px", left: "100px" }
   },
   {
     name: "Grandpa",
-    image: "icons/older_man_icon.png",
+    image: "img/older_man_icon.PNG",
     position: { top: "100px", left: "250px" }
   },
   {
     name: "Tom",
-    image: "icons/younger_man_icon.png",
+    image: "img/younger_man_icon.PNG",
     position: { top: "250px", left: "100px" }
   },
   {
     name: "Grandma",
-    image: "icons/older_woman_icon.png",
+    image: "img/older_woman_icon.PNG",
     position: { top: "250px", left: "250px" }
   },
   {
     name: "Mina",
-    image: "icons/woman_glasses_icon.png",
+    image: "img/woman_glasses_icon.PNG",
     position: { top: "400px", left: "100px" }
   },
   {
     name: "Baby",
-    image: "icons/baby_icon.png",
+    image: "img/baby_icon.PNG",
     position: { top: "400px", left: "250px" }
   },
   {
     name: "Rowan",
-    image: "icons/boy_striped_shirt_icon.png",
+    image: "img/boy_striped_shirt_icon.PNG",
     position: { top: "550px", left: "175px" }
   }
 ];
