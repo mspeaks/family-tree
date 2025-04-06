@@ -27,6 +27,10 @@ const familyData = {
     {
       name: "Grandpa",
       image: "img/older_man_icon.PNG"
+    },
+    {
+      name: "Grandma",
+      image: "img/older_woman_icon.PNG"
     }
   ]
 };
