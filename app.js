@@ -1,21 +1,27 @@
 const familyData = {
-  name: "Grandpa",
-  image: "img/older_man_icon.PNG",
+  name: "Search",
+  image: "",
   children: [
     {
       name: "Mark",
       image: "img/man_glasses_icon.PNG",
       children: [
         {
-          name: "Rowan",
-          image: "img/boy_striped_shirt_icon.PNG"
-        }
-      ]
-    },
-    {
-      name: "Zara",
-      image: "img/woman_glasses_icon.PNG",
-      children: [
+          name: "Zara",
+          image: "img/woman_glasses_icon.PNG"
+        },
+        {
+          name: "Twin1",
+          image: "img/younger_man_icon.PNG"
+        },
+        {
+          name: "Twin2",
+          image: "img/younger_man_icon.PNG"
+        },
+        {
+          name: "Luke",
+          image: "img/younger_man_icon.PNG"
+        },
         {
           name: "Raven",
           image: "img/baby_icon.PNG"
@@ -23,8 +29,9 @@ const familyData = {
       ]
     },
     {
-      name: "Luke",
-      image: "img/younger_man_icon.PNG"
+      name: "Grandpa",
+      image: "img/older_man_icon.PNG",
+      children: []
     }
   ]
 };
@@ -54,7 +61,8 @@ function renderFamilyTree(data) {
 
   // Create tree layout
   const treeLayout = d3.tree()
-    .size([height, width - 200]); // Swap width and height for vertical layout
+    .size([width - 100, height - 200]) // Adjust size to leave room for margins
+    .separation((a, b) => (a.parent == b.parent ? 2 : 2)); // Increase separation between nodes
 
   // Create hierarchy
   const root = d3.hierarchy(data);
@@ -68,9 +76,9 @@ function renderFamilyTree(data) {
     .enter()
     .append("path")
     .attr("class", "link")
-    .attr("d", d3.linkVertical() // Change to vertical links
+    .attr("d", d3.linkVertical()
       .x(d => d.x)
-      .y(d => d.y))
+      .y(d => d.y + 100)) // Add vertical offset
     .style("fill", "none")
     .style("stroke", "#ccc")
     .style("stroke-width", 2);
@@ -81,18 +89,19 @@ function renderFamilyTree(data) {
     .enter()
     .append("g")
     .attr("class", "node")
-    .attr("transform", d => `translate(${d.x},${d.y})`);
+    .attr("transform", d => `translate(${d.x},${d.y + 100})`); // Add vertical offset
 
   // Add images to nodes
   nodes.append("image")
-    .attr("x", -50)
-    .attr("y", -50)
-    .attr("width", 100)
-    .attr("height", 100)
+    .attr("x", -40)
+    .attr("y", -40)
+    .attr("width", 80)
+    .attr("height", 80)
     .attr("xlink:href", d => d.data.image)
     .style("border-radius", "50%")
     .style("cursor", "pointer")
     .style("transition", "transform 0.2s")
+    .style("opacity", d => d.data.name === "Search" ? 0 : 1) // Hide the search node
     .on("mouseover", function() {
       d3.select(this)
         .style("transform", "scale(1.1)")
