@@ -3,9 +3,23 @@ const familyData = {
   image: "",
   children: [
     {
-      name: "Mark",
-      image: "img/man_glasses_icon.PNG",
+      name: "Grandpa",
+      image: "img/older_man_icon.PNG",
       children: [
+        {
+          name: "Mark",
+          image: "img/man_glasses_icon.PNG",
+          children: [
+            {
+              name: "Rowan",
+              image: "img/boy_striped_shirt_icon.PNG"
+            },
+            {
+              name: "Raven",
+              image: "img/baby_icon.PNG"
+            }
+          ]
+        },
         {
           name: "Zara",
           image: "img/woman_glasses_icon.PNG"
@@ -13,24 +27,13 @@ const familyData = {
         {
           name: "Luke",
           image: "img/younger_man_icon.PNG"
-        },
-        {
-          name: "Rowan",
-          image: "img/boy_striped_shirt_icon.PNG"
-        },
-        {
-          name: "Raven",
-          image: "img/baby_icon.PNG"
         }
       ]
     },
     {
-      name: "Grandpa",
-      image: "img/older_man_icon.PNG"
-    },
-    {
       name: "Grandma",
-      image: "img/older_woman_icon.PNG"
+      image: "img/older_woman_icon.PNG",
+      children: []
     }
   ]
 };
@@ -40,8 +43,8 @@ const mobileOrder = [
   { name: "Grandpa", image: "img/older_man_icon.PNG" },
   { name: "Grandma", image: "img/older_woman_icon.PNG" },
   { name: "Mark", image: "img/man_glasses_icon.PNG" },
-  { name: "Luke", image: "img/younger_man_icon.PNG" },
   { name: "Zara", image: "img/woman_glasses_icon.PNG" },
+  { name: "Luke", image: "img/younger_man_icon.PNG" },
   { name: "Rowan", image: "img/boy_striped_shirt_icon.PNG" },
   { name: "Raven", image: "img/baby_icon.PNG" }
 ];
@@ -60,8 +63,15 @@ function renderFamilyTree(data) {
 
   // Create tree layout
   const treeLayout = d3.tree()
-    .size([width * 0.8, height * 0.7]) // Adjust size to be more compact
-    .separation((a, b) => (a.parent == b.parent ? 1.2 : 2)); // Reduce separation between siblings
+    .size([width * 0.8, height * 0.6]) // Adjust size to be more compact
+    .separation((a, b) => {
+      // Increase separation between Grandpa and Grandma
+      if (a.parent === b.parent && a.parent.data.name === "Root") {
+        return 2;
+      }
+      // Normal sibling separation
+      return a.parent === b.parent ? 1.2 : 2;
+    });
 
   // Create hierarchy
   const root = d3.hierarchy(data);
