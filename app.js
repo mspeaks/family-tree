@@ -3,8 +3,7 @@ const familyData = {
   image: "",
   children: [
     {
-      name: "Grandpa",
-      image: "img/older_man_icon.PNG",
+      name: "Fred & Joan",
       children: [
         {
           name: "Mark",
@@ -23,28 +22,18 @@ const familyData = {
         {
           name: "Zara",
           image: "img/woman_glasses_icon.PNG"
-        },
-        {
-          name: "Luke",
-          image: "img/younger_man_icon.PNG"
         }
       ]
-    },
-    {
-      name: "Grandma",
-      image: "img/older_woman_icon.PNG",
-      children: []
     }
   ]
 };
 
 // Mobile list order
 const mobileOrder = [
-  { name: "Grandpa", image: "img/older_man_icon.PNG" },
-  { name: "Grandma", image: "img/older_woman_icon.PNG" },
+  { name: "Fred", image: "img/older_man_icon.PNG" },
+  { name: "Joan", image: "img/older_woman_icon.PNG" },
   { name: "Mark", image: "img/man_glasses_icon.PNG" },
   { name: "Zara", image: "img/woman_glasses_icon.PNG" },
-  { name: "Luke", image: "img/younger_man_icon.PNG" },
   { name: "Rowan", image: "img/boy_striped_shirt_icon.PNG" },
   { name: "Raven", image: "img/baby_icon.PNG" }
 ];
@@ -63,15 +52,8 @@ function renderFamilyTree(data) {
 
   // Create tree layout
   const treeLayout = d3.tree()
-    .size([width * 0.8, height * 0.6]) // Adjust size to be more compact
-    .separation((a, b) => {
-      // Increase separation between Grandpa and Grandma
-      if (a.parent === b.parent && a.parent.data.name === "Root") {
-        return 2;
-      }
-      // Normal sibling separation
-      return a.parent === b.parent ? 1.2 : 2;
-    });
+    .size([width * 0.8, height * 0.6])
+    .separation((a, b) => a.parent === b.parent ? 1.2 : 2);
 
   // Create hierarchy
   const root = d3.hierarchy(data);
@@ -100,8 +82,35 @@ function renderFamilyTree(data) {
     .attr("class", "node")
     .attr("transform", d => `translate(${d.x},${d.y})`);
 
-  // Add images to nodes
-  nodes.append("image")
+  // Special handling for Fred & Joan node
+  nodes.filter(d => d.data.name === "Fred & Joan")
+    .call(node => {
+      // Add Fred's image
+      node.append("image")
+        .attr("x", -70)
+        .attr("y", -35)
+        .attr("width", 70)
+        .attr("height", 70)
+        .attr("xlink:href", "img/older_man_icon.PNG")
+        .style("border-radius", "50%")
+        .style("cursor", "pointer")
+        .style("transition", "transform 0.2s");
+
+      // Add Joan's image
+      node.append("image")
+        .attr("x", 0)
+        .attr("y", -35)
+        .attr("width", 70)
+        .attr("height", 70)
+        .attr("xlink:href", "img/older_woman_icon.PNG")
+        .style("border-radius", "50%")
+        .style("cursor", "pointer")
+        .style("transition", "transform 0.2s");
+    });
+
+  // Add images to regular nodes
+  nodes.filter(d => d.data.name !== "Root" && d.data.name !== "Fred & Joan")
+    .append("image")
     .attr("x", -35)
     .attr("y", -35)
     .attr("width", 70)
@@ -110,7 +119,7 @@ function renderFamilyTree(data) {
     .style("border-radius", "50%")
     .style("cursor", "pointer")
     .style("transition", "transform 0.2s")
-    .style("opacity", d => d.data.name === "Root" ? 0 : 1) // Hide root node
+    .style("opacity", d => d.data.name === "Root" ? 0 : 1)
     .on("mouseover", function() {
       d3.select(this)
         .style("transform", "scale(1.1)")
