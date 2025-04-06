@@ -1,10 +1,10 @@
 const familyData = {
-  name: "John",
-  image: "img/man_glasses_icon.PNG",
+  name: "Grandpa",
+  image: "img/older_man_icon.PNG",
   children: [
     {
-      name: "Tom",
-      image: "img/younger_man_icon.PNG",
+      name: "Mark",
+      image: "img/man_glasses_icon.PNG",
       children: [
         {
           name: "Rowan",
@@ -13,24 +13,18 @@ const familyData = {
       ]
     },
     {
-      name: "Mina",
+      name: "Zara",
       image: "img/woman_glasses_icon.PNG",
       children: [
         {
-          name: "Baby",
+          name: "Raven",
           image: "img/baby_icon.PNG"
         }
       ]
-    }
-  ],
-  parents: [
-    {
-      name: "Grandpa",
-      image: "img/older_man_icon.PNG"
     },
     {
-      name: "Grandma",
-      image: "img/older_woman_icon.PNG"
+      name: "Luke",
+      image: "img/younger_man_icon.PNG"
     }
   ]
 };
@@ -49,7 +43,7 @@ function renderFamilyTree(data) {
 
   // Create tree layout
   const treeLayout = d3.tree()
-    .size([width, height]);
+    .size([height, width - 200]); // Swap width and height for vertical layout
 
   // Create hierarchy
   const root = d3.hierarchy(data);
@@ -63,9 +57,9 @@ function renderFamilyTree(data) {
     .enter()
     .append("path")
     .attr("class", "link")
-    .attr("d", d3.linkHorizontal()
-      .x(d => d.y)
-      .y(d => d.x))
+    .attr("d", d3.linkVertical() // Change to vertical links
+      .x(d => d.x)
+      .y(d => d.y))
     .style("fill", "none")
     .style("stroke", "#ccc")
     .style("stroke-width", 2);
@@ -76,7 +70,7 @@ function renderFamilyTree(data) {
     .enter()
     .append("g")
     .attr("class", "node")
-    .attr("transform", d => `translate(${d.y},${d.x})`);
+    .attr("transform", d => `translate(${d.x},${d.y})`);
 
   // Add images to nodes
   nodes.append("image")
