@@ -1,0 +1,43 @@
+
+body {
+  font-family: sans-serif;
+  background: #faf6e9;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+header {
+  margin: 20px;
+}
+
+#searchBar {
+  padding: 10px;
+  width: 300px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+#familyTree {
+  position: relative;
+  width: 100%;
+  height: 800px;
+  max-width: 1200px;
+  background: #fffaf0;
+  border: 1px solid #eee;
+  border-radius: 10px;
+}
+
+.family-icon {
+  position: absolute;
+  width: 100px;
+  border-radius: 50%;
+  transition: transform 0.2s ease;
+}
+
+.family-icon:hover {
+  transform: scale(1.1);
+}
