@@ -122,12 +122,17 @@ function renderMobileList(data) {
   mobileList.className = "mobile-list";
   
   data.forEach(person => {
+    const personContainer = document.createElement("div");
+    personContainer.className = "person-container";
+    
     const img = document.createElement("img");
     img.src = person.image;
     img.alt = person.name;
     img.title = person.name;
     img.className = "family-icon";
-    mobileList.appendChild(img);
+    
+    personContainer.appendChild(img);
+    mobileList.appendChild(personContainer);
   });
   
   container.appendChild(mobileList);
